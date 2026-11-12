@@ -1,14 +1,14 @@
 export const content = {
   pt: {
     hero: {
-      role: 'Desenvolvedor de Software',
-      bio: 'Profissional em início de carreira com experiência em desenvolvimento web, integração de APIs e projetos embarcados/IoT. Buscando oportunidades para crescer como desenvolvedor, contribuindo com times ágeis e soluções orientadas a produto.',
+      role: 'Desenvolvedor de Software | Backend & IA',
+      bio: 'Engenheiro da Computação (UNISANTA) e pós-graduando no MBA em Engenharia de Software (USP/ESALQ). Foco na construção de APIs REST escaláveis, microsserviços, integrações críticas e soluções produtivas com IA Generativa.',
     },
     about: {
       heading: 'Sobre',
       items: [
-        'Atualmente Desenvolvedor de Integrações Jr. na Contele (foco em IA e Automações): integrações e automações com Node.js, TypeScript e N8N, consumo de APIs REST e aplicação de LLMs (incluindo Claude da Anthropic) em fluxos inteligentes.',
-        'Engenharia da Computação pela Universidade Santa Cecília (completo); cursando MBA em Engenharia de Software pela USP/ESALQ.',
+        'Desenvolvedor de Integrações na Contele (foco em IA e Automações): arquitetura e implementação de integrações REST ponta a ponta (Correios e logística reversa), pipelines assíncronos com Node.js, TypeScript e N8N, e módulos fullstack no CONTELE-OS (Next.js, Supabase, PostgreSQL). Aplicação prática de LLMs (Claude) para triagem operacional e predição de churn.',
+        'Graduado em Engenharia da Computação pela Universidade Santa Cecília (UNISANTA), com nota máxima no TCC e publicação de artigo no congresso científico COBRICS; pós-graduando no MBA em Engenharia de Software pela USP/ESALQ, aprofundando Clean Architecture, DDD, TDD e sistemas distribuídos.',
         'Idiomas: Português (nativo), Inglês (avançado), Espanhol (intermediário).',
       ],
       skillsHeading: 'Tecnologias & Ferramentas',
@@ -23,14 +23,14 @@ export const content = {
   },
   en: {
     hero: {
-      role: 'Software Developer',
-      bio: 'Early-career professional with experience in web development, API integration, and embedded/IoT projects. Looking for opportunities to grow as a developer, contributing to agile teams and product-driven solutions.',
+      role: 'Software Developer | Backend & AI',
+      bio: 'Computer Engineer (UNISANTA) and graduate student in Software Engineering (USP/ESALQ). Focused on scalable REST APIs, microservices, mission-critical integrations, and production-grade Generative AI solutions.',
     },
     about: {
       heading: 'About',
       items: [
-        "Currently Junior Integrations Developer at Contele (focus on AI and Automation): integrations and process automation with Node.js, TypeScript and N8N, REST API consumption, and applying LLMs (including Anthropic's Claude) in intelligent automation flows.",
-        'Computer Engineering from Universidade Santa Cecília (completed); currently pursuing an MBA in Software Engineering from USP/ESALQ.',
+        'Integrations Developer at Contele (focus on AI and Automation): architecture and implementation of end-to-end REST integrations (reverse logistics & Correios), asynchronous pipelines and workflow orchestration with Node.js, TypeScript, and N8N, alongside fullstack modules on CONTELE-OS (Next.js, Supabase, PostgreSQL). Production LLM deployments (Claude) for operational triage and churn prediction.',
+        'B.S. in Computer Engineering from Universidade Santa Cecília (UNISANTA), with highest honors on capstone project and published research paper at the COBRICS conference; currently pursuing an MBA in Software Engineering at USP/ESALQ, specializing in Clean Architecture, DDD, TDD, and distributed systems.',
         'Languages: Portuguese (native), English (advanced), Spanish (intermediate).',
       ],
       skillsHeading: 'Technologies & Tools',
@@ -46,16 +46,16 @@ export const content = {
 };
 
 export const skillsList = [
-  'Node.js',
   'TypeScript',
+  'Node.js',
+  'Next.js',
   'React',
-  'Python',
-  'C/C++',
-  'IoT / Embarcados',
-  'N8N',
-  'LLMs',
+  'PostgreSQL / Supabase',
   'Docker',
-  'SQL',
+  'IA & LLMs (Claude, RAG)',
+  'APIs REST & N8N',
+  'Python',
+  'Clean Architecture / DDD',
 ];
 
 export const socialLinks = [
