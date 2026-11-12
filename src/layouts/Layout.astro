@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Luiz Ricardo Favaro — Desenvolvedor de Software',
+  description = 'Portfólio de Luiz Ricardo Favaro, desenvolvedor de software focado em integrações, IA e sistemas embarcados.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Open Graph / Meta -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ri-favaro.github.io/" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://ri-favaro.github.io/avatar.jpg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+
+    <link rel="icon" type="image/jpeg" href="/avatar.jpg" />
+
+    <!-- Theme & Lang Init script (avoids FOUC) -->
+    <script is:inline>
+      (function () {
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+
+        const savedLang = localStorage.getItem('lang');
+        const browserLang = navigator.language && navigator.language.startsWith('en') ? 'en' : 'pt';
+        const lang = savedLang || browserLang;
+        document.documentElement.setAttribute('lang', lang);
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

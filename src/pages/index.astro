@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Controls from '../components/Controls.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { content, skillsList, socialLinks } from '../data/translations';
+import { projects } from '../data/projects';
+---
+
+<Layout>
+  <Controls />
+
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="hero-avatar-wrapper">
+        <img
+          class="hero-photo"
+          src="/avatar.jpg"
+          alt="Foto de Luiz Ricardo Favaro"
+          width="128"
+          height="128"
+          loading="eager"
+        />
+      </div>
+      <h1>Luiz Ricardo Favaro</h1>
+      <p class="role">
+        <span data-lang="pt">{content.pt.hero.role}</span>
+        <span data-lang="en">{content.en.hero.role}</span>
+      </p>
+      <p class="bio">
+        <span data-lang="pt">{content.pt.hero.bio}</span>
+        <span data-lang="en">{content.en.hero.bio}</span>
+      </p>
+      <div class="social-links">
+        {socialLinks.map((item) => (
+          <a
+            href={item.url}
+            target={item.url.startsWith('mailto') ? '_self' : '_blank'}
+            rel={item.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+      <h2>
+        <span data-lang="pt">{content.pt.about.heading}</span>
+        <span data-lang="en">{content.en.about.heading}</span>
+      </h2>
+      <ul class="about-list">
+        {content.pt.about.items.map((item, index) => (
+          <li>
+            <span data-lang="pt">{item}</span>
+            <span data-lang="en">{content.en.about.items[index]}</span>
+          </li>
+        ))}
+      </ul>
+
+      <h3 class="skills-heading">
+        <span data-lang="pt">{content.pt.about.skillsHeading}</span>
+        <span data-lang="en">{content.en.about.skillsHeading}</span>
+      </h3>
+      <div class="skills-tags">
+        {skillsList.map((skill) => (
+          <span>{skill}</span>
+        ))}
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+      <h2>
+        <span data-lang="pt">{content.pt.projects.heading}</span>
+        <span data-lang="en">{content.en.projects.heading}</span>
+      </h2>
+
+      {projects.map((project) => (
+        <ProjectCard project={project} />
+      ))}
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-heading">
+      <span data-lang="pt">{content.pt.footer.heading}</span>
+      <span data-lang="en">{content.en.footer.heading}</span>
+    </p>
+    <div class="social-links">
+      {socialLinks.map((item) => (
+        <a
+          href={item.url}
+          target={item.url.startsWith('mailto') ? '_self' : '_blank'}
+          rel={item.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+    <p class="copyright">
+      <span data-lang="pt">{content.pt.footer.copyright}</span>
+      <span data-lang="en">{content.en.footer.copyright}</span>
+    </p>
+  </footer>
+</Layout>

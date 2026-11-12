@@ -1,0 +1,44 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="project-card">
+  <div class="project-header">
+    <h3>
+      <span data-lang="pt">{project.title.pt}</span>
+      <span data-lang="en">{project.title.en}</span>
+    </h3>
+  </div>
+
+  <p>
+    <span data-lang="pt">{project.description.pt}</span>
+    <span data-lang="en">{project.description.en}</span>
+  </p>
+
+  <div class="tags">
+    {project.tags.map((tag) => (
+      <span>{tag}</span>
+    ))}
+  </div>
+
+  {project.link && (
+    <div class="project-actions">
+      <a
+        class="project-link"
+        href={project.link}
+        target={project.isInternal ? '_self' : '_blank'}
+        rel={project.isInternal ? undefined : 'noopener noreferrer'}
+      >
+        <span data-lang="pt">{project.linkText?.pt || 'Acessar'}</span>
+        <span data-lang="en">{project.linkText?.en || 'View'}</span>
+        <span aria-hidden="true">{project.isInternal ? '→' : '↗'}</span>
+      </a>
+    </div>
+  )}
+</article>

@@ -1,0 +1,51 @@
+---
+---
+
+<div class="controls">
+  <button id="theme-toggle" aria-label="Alternar tema" title="Alternar tema">
+    <span class="theme-icon" aria-hidden="true">🌙</span>
+  </button>
+  <button id="lang-toggle" aria-label="Mudar idioma / Change language" title="Mudar idioma / Change language">
+    <span data-lang="pt">EN</span>
+    <span data-lang="en">PT</span>
+  </button>
+</div>
+
+<script>
+  function setupControls() {
+    const themeBtn = document.getElementById('theme-toggle');
+    const langBtn = document.getElementById('lang-toggle');
+    const themeIcon = themeBtn?.querySelector('.theme-icon');
+
+    function updateThemeIcon() {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      if (themeIcon) {
+        themeIcon.textContent = currentTheme === 'light' ? '☀️' : '🌙';
+      }
+    }
+
+    updateThemeIcon();
+
+    themeBtn?.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      localStorage.setItem('theme', nextTheme);
+      updateThemeIcon();
+    });
+
+    langBtn?.addEventListener('click', () => {
+      const currentLang = document.documentElement.getAttribute('lang') || 'pt';
+      const nextLang = currentLang === 'pt' ? 'en' : 'pt';
+      document.documentElement.setAttribute('lang', nextLang);
+      localStorage.setItem('lang', nextLang);
+    });
+  }
+
+  // Run on initial load and after view transitions (if added)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupControls);
+  } else {
+    setupControls();
+  }
+</script>
