@@ -65,19 +65,19 @@ function initSkillsExplorer() {
         )
         .join('');
 
-    if (rel.uses && rel.uses.length) {
+    if (rel.uses?.length) {
       const lbl = lang === 'en' ? 'Uses / Calls:' : 'Usa / Chama:';
       relRows.push(
         `<div class="rel-row"><span class="rel-lbl">${lbl}</span>${makeLinks(rel.uses)}</div>`,
       );
     }
-    if (rel.usedBy && rel.usedBy.length) {
+    if (rel.usedBy?.length) {
       const lbl = lang === 'en' ? 'Used by:' : 'Usada por:';
       relRows.push(
         `<div class="rel-row"><span class="rel-lbl">${lbl}</span>${makeLinks(rel.usedBy)}</div>`,
       );
     }
-    if (rel.pairsWith && rel.pairsWith.length) {
+    if (rel.pairsWith?.length) {
       const lbl = lang === 'en' ? 'Pairs with:' : 'Combina com:';
       relRows.push(
         `<div class="rel-row"><span class="rel-lbl">${lbl}</span>${makeLinks(rel.pairsWith)}</div>`,
@@ -276,7 +276,8 @@ function initSkillsExplorer() {
 
     const outTitle = lang === 'en' ? 'CALLS / ORCHESTRATES' : 'CHAMA / DIRECIONA PARA';
     const inTitle = lang === 'en' ? 'CALLED BY' : 'CHAMADA POR';
-    const jumpBtnText = lang === 'en' ? 'View Full Card & Example →' : 'Ver card e exemplo completo →';
+    const jumpBtnText =
+      lang === 'en' ? 'View Full Card & Example →' : 'Ver card e exemplo completo →';
 
     box.innerHTML = `
       <div>
@@ -307,10 +308,7 @@ function initSkillsExplorer() {
           <div style="font-size:0.72rem;color:var(--text-muted);font-weight:600;margin-bottom:5px;letter-spacing:0.04em;">${inTitle}</div>
           <div style="display:flex;flex-wrap:wrap;gap:6px;">
             ${incoming
-              .map(
-                (i) =>
-                  `<button class="rel-link" data-node-select="${i.id}">/${i.id}</button>`,
-              )
+              .map((i) => `<button class="rel-link" data-node-select="${i.id}">/${i.id}</button>`)
               .join('')}
           </div>
         </div>`
@@ -344,18 +342,13 @@ function initSkillsExplorer() {
         graphClusterFilter === 'Todos' ||
         n1.cluster === graphClusterFilter ||
         n2.cluster === graphClusterFilter;
-      const cls = !clusterMatch
-        ? 'graph-edge dim'
-        : isAdj
-          ? 'graph-edge active'
-          : 'graph-edge';
+      const cls = !clusterMatch ? 'graph-edge dim' : isAdj ? 'graph-edge active' : 'graph-edge';
       return `<line class="${cls}" x1="${n1.x}" y1="${n1.y}" x2="${n2.x}" y2="${n2.y}" />`;
     }).join('');
 
     const nodesHtml = GRAPH_NODES.map((n) => {
       const c = CAT_COLORS[n.cluster] || CAT_COLORS.Core;
-      const clusterMatch =
-        graphClusterFilter === 'Todos' || n.cluster === graphClusterFilter;
+      const clusterMatch = graphClusterFilter === 'Todos' || n.cluster === graphClusterFilter;
       const isSel = n.id === activeId;
       const isConn = connectedIds.has(n.id);
       const dim = !clusterMatch || (activeId && !isConn);
@@ -436,7 +429,7 @@ function initSkillsExplorer() {
 
     // Tab buttons
     const tabBtn = e.target.closest('.tab-btn');
-    if (tabBtn && tabBtn.dataset.tab) {
+    if (tabBtn?.dataset.tab) {
       setActiveTab(tabBtn.dataset.tab);
       return;
     }

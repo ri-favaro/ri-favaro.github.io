@@ -591,7 +591,7 @@ const totalPrinciples = skillsListRaw.filter((s) => s.kind === 'principle').leng
     padding: 0.45rem 0.8rem;
     border-radius: 9999px;
     border: 1px solid var(--border);
-    transition: all 0.15s cubic-bezier(0.2, 0, 0, 1);
+    transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease, transform 0.12s cubic-bezier(0.2, 0, 0, 1);
     min-height: 40px;
   }
 
@@ -1699,7 +1699,7 @@ const totalPrinciples = skillsListRaw.filter((s) => s.kind === 'principle').leng
     color: var(--text-muted);
     cursor: pointer;
     text-decoration: none;
-    transition: all 0.12s ease;
+    transition: color 0.12s ease, border-color 0.12s ease, background-color 0.12s ease, transform 0.12s cubic-bezier(0.2, 0, 0, 1);
   }
 
   :global(.rel-link:hover) {
