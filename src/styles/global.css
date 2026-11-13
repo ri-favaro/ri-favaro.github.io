@@ -261,6 +261,83 @@ h2::after {
   background: var(--accent-subtle);
 }
 
+/* Agent Skills Banner */
+.agent-skills-banner {
+  margin-top: 2rem;
+  background: var(--card-bg);
+  border: 1px solid var(--accent);
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+}
+
+.agent-skills-banner:hover {
+  transform: translateY(-2px);
+  background: var(--card-bg-hover);
+}
+
+.agent-skills-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+.agent-skills-badge .badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+
+.agent-skills-content h4 {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.agent-skills-content p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.agent-skills-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 650;
+  color: var(--accent);
+  text-decoration: none;
+  width: fit-content;
+  transition: gap 0.15s ease, color 0.15s ease;
+}
+
+.agent-skills-link:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  gap: 0.6rem;
+}
+
+.agent-skills-link:active {
+  transform: scale(0.96);
+}
+
 /* Project Cards */
 .project-card {
   background: var(--card-bg);
