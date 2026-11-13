@@ -1,0 +1,1786 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Controls from '../components/Controls.astro';
+import {
+  dailyPractices,
+  skillsListRaw,
+  workflowsList,
+  graphNodes,
+  graphEdges,
+  categoryColors,
+} from '../data/skillsData';
+
+const totalSkills = skillsListRaw.filter((s) => s.kind === 'skill').length;
+const totalPrinciples = skillsListRaw.filter((s) => s.kind === 'principle').length;
+---
+
+<Layout
+  title="Como Construo com Agentes de Código — Luiz Ricardo Favaro"
+  description="Playbook prático de engenharia de software com agentes LLM: orquestração de subagentes, 34 skills operacionais, 24 princípios de engenharia e verificação real."
+>
+  <div class="skills-page">
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <div class="nav-container">
+        <a href="/" class="nav-back" aria-label="Voltar para a página inicial do portfólio">
+          <svg class="nav-arrow" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span data-lang="pt">Voltar ao Portfólio</span>
+          <span data-lang="en">Back to Portfolio</span>
+        </a>
+        <div class="nav-links">
+          <a
+            href="https://github.com/poteto"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="nav-repo-link author-pill"
+            title="Lauren Tan (@poteto) — Autora original do ecossistema pstack"
+          >
+            <span class="pill-dot" aria-hidden="true"></span>
+            <span>@poteto</span>
+          </a>
+          <a
+            href="https://github.com/ri-favaro/ri-favaro.github.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="nav-repo-link"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+            </svg>
+            <span>GitHub</span>
+          </a>
+          <Controls />
+        </div>
+      </div>
+    </header>
+
+    <main class="skills-main">
+      <!-- Hero Section -->
+      <section class="skills-hero" id="hero">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          <span>ENGINEERING PLAYBOOK &amp; SKILLS</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span data-lang="pt">Como Utilizo Agentes de Código no Dia a Dia</span>
+          <span data-lang="en">How I Build with AI Code Agents in Production</span>
+        </h1>
+
+        <p class="hero-manifesto">
+          <span data-lang="pt">
+            Desenvolvimento assistido por IA não é autocomplete passivo. É <strong>orquestração determinística</strong>, modelagem prévia de arquitetura, <strong>testes reais executados localmente</strong> e subtração ativa de complexidade antes de qualquer commit.
+          </span>
+          <span data-lang="en">
+            AI-assisted development is not passive autocomplete. It is <strong>deterministic orchestration</strong>, upfront architecture modeling, <strong>real local test execution</strong>, and relentless complexity subtraction before any commit.
+          </span>
+        </p>
+
+        <!-- Ecosystem Author & Attribution Card -->
+        <aside class="author-attribution" aria-label="Crédito de Autoria">
+          <div class="author-avatar-wrap">
+            <img
+              src="https://github.com/poteto.png"
+              alt="Avatar de Lauren Tan (@poteto)"
+              width="44"
+              height="44"
+              class="author-avatar"
+              loading="lazy"
+            />
+          </div>
+          <div class="author-info">
+            <span class="author-label">
+              <span data-lang="pt">CRÉDITO &amp; AUTORIA DO ECOSSISTEMA</span>
+              <span data-lang="en">ECOSYSTEM AUTHOR &amp; ATTRIBUTION</span>
+            </span>
+            <p class="author-text">
+              <span data-lang="pt">
+                As 58 skills, workflows e princípios deste catálogo foram desenhados e documentados por
+                <a href="https://github.com/poteto" target="_blank" rel="noopener noreferrer" class="author-link"><strong>Lauren Tan (@poteto)</strong></a>
+                no projeto <a href="https://github.com/cursor/plugins/tree/main/pstack/skills" target="_blank" rel="noopener noreferrer" class="author-link"><code>pstack</code></a>.
+              </span>
+              <span data-lang="en">
+                The 58 skills, workflows, and principles in this catalog were created and maintained by
+                <a href="https://github.com/poteto" target="_blank" rel="noopener noreferrer" class="author-link"><strong>Lauren Tan (@poteto)</strong></a>
+                in the <a href="https://github.com/cursor/plugins/tree/main/pstack/skills" target="_blank" rel="noopener noreferrer" class="author-link"><code>pstack</code></a> repository.
+              </span>
+            </p>
+          </div>
+          <a
+            href="https://github.com/poteto"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="author-gh-btn"
+            aria-label="Perfil do GitHub de @poteto"
+          >
+            <span>github.com/poteto</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </a>
+        </aside>
+
+        <!-- TL;DR Collapsible Section (Too Long; Didn't Read) -->
+        <details class="tldr-box" id="tldr-summary">
+          <summary class="tldr-summary">
+            <div class="tldr-summary-left">
+              <span class="tldr-tag">
+                <span data-lang="pt">TL;DR • RESUMO EM 30 SEGUNDOS</span>
+                <span data-lang="en">TL;DR • 30-SECOND BREAKDOWN</span>
+              </span>
+              <span class="tldr-prompt-text">
+                <span data-lang="pt">Com preguiça de ler as 58 skills? Abra aqui o resumo master</span>
+                <span data-lang="en">Too long, didn't read? Open here for the executive breakdown</span>
+              </span>
+            </div>
+            <div class="tldr-chevron-wrap" aria-hidden="true">
+              <svg class="tldr-chevron" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </summary>
+          <div class="tldr-content">
+            <div class="tldr-grid">
+              <div class="tldr-item">
+                <span class="tldr-item-num">01</span>
+                <div>
+                  <h4>
+                    <span data-lang="pt">O que é isso tudo?</span>
+                    <span data-lang="en">What is this?</span>
+                  </h4>
+                  <p>
+                    <span data-lang="pt">
+                      É o meu playbook prático de engenharia para trabalhar com agentes LLM (Claude, Gemini, Cursor, OpenBot). Baseado no ecossistema <code>pstack</code> de <a href="https://github.com/poteto" target="_blank" rel="noopener noreferrer">@poteto</a>.
+                    </span>
+                    <span data-lang="en">
+                      My daily engineering framework for building with LLM agents (Claude, Gemini, Cursor, OpenBot). Powered by <a href="https://github.com/poteto" target="_blank" rel="noopener noreferrer">@poteto</a>'s <code>pstack</code> methodology.
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="tldr-item">
+                <span class="tldr-item-num">02</span>
+                <div>
+                  <h4>
+                    <span data-lang="pt">O problema que resolve</span>
+                    <span data-lang="en">The Problem It Solves</span>
+                  </h4>
+                  <p>
+                    <span data-lang="pt">
+                      Elimina o "código espaguete de IA": respostas com comentários óbvios, abstrações prematuras, perda de escopo e bugs ocultos sem teste real.
+                    </span>
+                    <span data-lang="en">
+                      Prevents "AI slop &amp; spaghetti code": answers full of redundant comments, speculative wrappers, scope creep, and untested regressions.
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="tldr-item">
+                <span class="tldr-item-num">03</span>
+                <div>
+                  <h4>
+                    <span data-lang="pt">As 4 regras de ouro</span>
+                    <span data-lang="en">The 4 Golden Rules</span>
+                  </h4>
+                  <ul class="tldr-rules-list">
+                    <li>
+                      <span data-lang="pt"><strong>1. Arquitetura primeiro:</strong> Modelar tipos antes da lógica (<code>/architect</code>).</span>
+                      <span data-lang="en"><strong>1. Architecture first:</strong> Model types before logic (<code>/architect</code>).</span>
+                    </li>
+                    <li>
+                      <span data-lang="pt"><strong>2. Arena de modelos:</strong> Disputar abordagens em worktrees (<code>/arena</code>).</span>
+                      <span data-lang="en"><strong>2. Model arena:</strong> Compete approaches in worktrees (<code>/arena</code>).</span>
+                    </li>
+                    <li>
+                      <span data-lang="pt"><strong>3. Subtração ativa:</strong> Apagar código morto e comentários inúteis (<code>/no-comments</code>).</span>
+                      <span data-lang="en"><strong>3. Active subtraction:</strong> Delete dead code and useless comments (<code>/no-comments</code>).</span>
+                    </li>
+                    <li>
+                      <span data-lang="pt"><strong>4. Prova real:</strong> Só commitar com testes locais passando de fato (<code>/tdd</code>).</span>
+                      <span data-lang="en"><strong>4. Runtime proof:</strong> Never commit without real passing tests (<code>/tdd</code>).</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="tldr-item">
+                <span class="tldr-item-num">04</span>
+                <div>
+                  <h4>
+                    <span data-lang="pt">Como usar esta página</span>
+                    <span data-lang="en">How to Use This Page</span>
+                  </h4>
+                  <p>
+                    <span data-lang="pt">
+                      Escolha a skill no catálogo abaixo, clique em <strong>Copiar</strong> e cole no prompt do seu agente. Use o grafo para ver as dependências.
+                    </span>
+                    <span data-lang="en">
+                      Pick a skill below, click <strong>Copy</strong>, and paste it into your agent's prompt. Use the graph to trace dependencies.
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="tldr-punchline">
+              <span class="tldr-punchline-quote">“</span>
+              <span data-lang="pt">Menos mágica cega de IA, mais engenharia de software determinística.</span>
+              <span data-lang="en">Less blind AI magic, more deterministic software engineering.</span>
+              <span class="tldr-punchline-quote">”</span>
+            </div>
+          </div>
+        </details>
+
+        <!-- Stats Overview -->
+        <div class="stats-ribbon">
+          <div class="stat-card">
+            <span class="stat-number">{totalSkills}</span>
+            <span class="stat-desc">
+              <span data-lang="pt">Skills Operacionais</span>
+              <span data-lang="en">Operational Skills</span>
+            </span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">{totalPrinciples}</span>
+            <span class="stat-desc">
+              <span data-lang="pt">Princípios de Engenharia</span>
+              <span data-lang="en">Engineering Principles</span>
+            </span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">{workflowsList.length}</span>
+            <span class="stat-desc">
+              <span data-lang="pt">Workflows Combinados</span>
+              <span data-lang="en">Chained Workflows</span>
+            </span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">100%</span>
+            <span class="stat-desc">
+              <span data-lang="pt">Validação com Testes Reais</span>
+              <span data-lang="en">Verified via Local Tests</span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 1: O Pipeline Diário -->
+      <section class="section-block" id="daily-pipeline">
+        <div class="section-heading">
+          <h2>
+            <span data-lang="pt">O Meu Pipeline Diário com Agentes</span>
+            <span data-lang="en">My Daily Workflow with Code Agents</span>
+          </h2>
+          <p class="section-subtext">
+            <span data-lang="pt">Os cinco pilares práticos que aplico em cada tarefa com LLMs, do primeiro prompt à aprovação de PR.</span>
+            <span data-lang="en">The five practical pillars applied to every agent session, from initial prompt to merged PR.</span>
+          </p>
+        </div>
+
+        <div class="practice-cards-grid">
+          {dailyPractices.map((practice) => (
+            <article class="practice-card">
+              <div class="practice-head">
+                <span class="practice-step">{practice.step}</span>
+                <div class="practice-skill-tags">
+                  {practice.skills.map((s) => (
+                    <span class="tag-pill">/{s}</span>
+                  ))}
+                </div>
+              </div>
+              <h3 class="practice-title">
+                <span data-lang="pt">{practice.title.pt}</span>
+                <span data-lang="en">{practice.title.en}</span>
+              </h3>
+              <p class="practice-summary">
+                <span data-lang="pt">{practice.summary.pt}</span>
+                <span data-lang="en">{practice.summary.en}</span>
+              </p>
+              <div class="practice-principle">
+                <span class="principle-bullet">▪</span>
+                <em>{practice.principle}</em>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <!-- Section 2: Explorer & Graph -->
+      <section class="section-block" id="explorer">
+        <div class="section-heading">
+          <h2>
+            <span data-lang="pt">Explorador Interativo de Skills &amp; Princípios (58)</span>
+            <span data-lang="en">Interactive Skills &amp; Principles Explorer (58)</span>
+          </h2>
+          <p class="section-subtext">
+            <span data-lang="pt">Consulte o mapa de dependências, fluxos passo a passo ou use a busca em tempo real com atalho de teclado <code>/</code>.</span>
+            <span data-lang="en">Explore dependency maps, multi-step workflows, or use live search with keyboard shortcut <code>/</code>.</span>
+          </p>
+        </div>
+
+        <!-- Sticky Toolbar -->
+        <div class="explorer-toolbar" id="toolbar">
+          <nav class="toolbar-tabs" aria-label="Filtro de visualização do explorador">
+            <button class="tab-btn active" data-tab="all">
+              <span data-lang="pt">Tudo</span>
+              <span data-lang="en">All</span>
+            </button>
+            <button class="tab-btn" data-tab="graph">
+              <span data-lang="pt">Grafo de Relações</span>
+              <span data-lang="en">Relationship Graph</span>
+            </button>
+            <button class="tab-btn" data-tab="workflows">
+              <span data-lang="pt">Workflows ({workflowsList.length})</span>
+              <span data-lang="en">Workflows ({workflowsList.length})</span>
+            </button>
+            <button class="tab-btn" data-tab="skills">
+              <span data-lang="pt">Skills Operacionais ({totalSkills})</span>
+              <span data-lang="en">Operational Skills ({totalSkills})</span>
+            </button>
+            <button class="tab-btn" data-tab="principles">
+              <span data-lang="pt">Princípios ({totalPrinciples})</span>
+              <span data-lang="en">Principles ({totalPrinciples})</span>
+            </button>
+          </nav>
+
+          <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Buscar skill, /comando ou conceito (pressione /)..."
+              aria-label="Buscar skills e princípios"
+            />
+            <kbd class="search-shortcut" title="Pressione / para buscar">/</kbd>
+            <button class="search-clear" id="search-clear" aria-label="Limpar busca">&times;</button>
+          </div>
+        </div>
+
+        <!-- SUB-SECAO: GRAFO DE RELACOES -->
+        <div class="view-panel" id="panel-graph" data-view="graph">
+          <div class="panel-header">
+            <h3>
+              <span data-lang="pt">Grafo de Dependências e Orquestração</span>
+              <span data-lang="en">Dependency &amp; Orchestration Graph</span>
+            </h3>
+            <p class="panel-desc">
+              <span data-lang="pt">Passe o cursor ou clique em qualquer nó para destacar quem a skill chama e quem a consome.</span>
+              <span data-lang="en">Hover or click any node to inspect outgoing and incoming relationships.</span>
+            </p>
+          </div>
+
+          <div class="cluster-filters" id="graph-filters"></div>
+
+          <div class="graph-wrapper">
+            <div class="graph-canvas-container">
+              <svg id="skill-graph" viewBox="0 0 980 580" role="img" aria-label="Grafo interativo de dependências entre skills"></svg>
+            </div>
+            <div class="graph-inspector" id="graph-inspector">
+              <div class="inspector-empty">
+                <h4>
+                  <span data-lang="pt">Selecione um Nó</span>
+                  <span data-lang="en">Select a Node</span>
+                </h4>
+                <p>
+                  <span data-lang="pt">Clique em qualquer nó do grafo ao lado para visualizar os detalhes, conexões diretas e saltar para o card com exemplo de uso.</span>
+                  <span data-lang="en">Click any node on the graph to inspect summary, connections, and jump to the runnable card.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-SECAO: WORKFLOWS COMBINADOS -->
+        <div class="view-panel" id="panel-workflows" data-view="workflows">
+          <div class="panel-header">
+            <h3>
+              <span data-lang="pt">Workflows Passo a Passo (Cadeias de Execução)</span>
+              <span data-lang="en">Chained Execution Workflows</span>
+            </h3>
+            <p class="panel-desc">
+              <span data-lang="pt">Combinações estruturadas para diferentes cenários de engenharia. Clique em qualquer etapa para navegar até o comando correspondente.</span>
+              <span data-lang="en">Structured chains for real-world scenarios. Click any step to jump straight to the skill card.</span>
+            </p>
+          </div>
+          <div class="workflows-grid" id="workflows-grid"></div>
+        </div>
+
+        <!-- SUB-SECAO: SKILLS OPERACIONAIS -->
+        <div class="view-panel" id="panel-skills" data-view="skills">
+          <div class="panel-header-row">
+            <div>
+              <h3>
+                <span data-lang="pt">Skills Operacionais &amp; Playbooks</span>
+                <span data-lang="en">Operational Skills &amp; Playbooks</span>
+              </h3>
+              <p class="panel-desc" id="skills-count-label">Exibindo {totalSkills} skills</p>
+            </div>
+          </div>
+          <div class="filter-chips-row" id="skills-filters"></div>
+          <div class="cards-grid" id="skills-grid"></div>
+        </div>
+
+        <!-- SUB-SECAO: PRINCIPIOS -->
+        <div class="view-panel" id="panel-principles" data-view="principles">
+          <div class="panel-header-row">
+            <div>
+              <h3>
+                <span data-lang="pt">Princípios de Engenharia (principle-*)</span>
+                <span data-lang="en">Engineering Principles (principle-*)</span>
+              </h3>
+              <p class="panel-desc" id="principles-count-label">Exibindo {totalPrinciples} princípios</p>
+            </div>
+          </div>
+          <div class="filter-chips-row" id="principles-filters"></div>
+          <div class="cards-grid" id="principles-grid"></div>
+        </div>
+      </section>
+
+      <!-- Back to Top & Bottom Nav -->
+      <div class="bottom-action-bar">
+        <a href="#hero" class="btn-secondary">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
+          <span data-lang="pt">Voltar ao Topo</span>
+          <span data-lang="en">Back to Top</span>
+        </a>
+        <a href="/" class="btn-primary">
+          <span data-lang="pt">Explorar Outros Projetos →</span>
+          <span data-lang="en">Explore More Projects →</span>
+        </a>
+      </div>
+
+      <footer class="skills-footer-note">
+        <p>
+          <span data-lang="pt">
+            Todas as 58 skills, workflows e princípios originais são de autoria de
+            <a href="https://github.com/poteto" target="_blank" rel="noopener noreferrer"><strong>Lauren Tan (@poteto)</strong></a>
+            no projeto <a href="https://github.com/cursor/plugins/tree/main/pstack/skills" target="_blank" rel="noopener noreferrer">pstack</a>.
+          </span>
+          <span data-lang="en">
+            All 58 original skills, workflows, and principles were authored by
+            <a href="https://github.com/poteto" target="_blank" rel="noopener noreferrer"><strong>Lauren Tan (@poteto)</strong></a>
+            in the <a href="https://github.com/cursor/plugins/tree/main/pstack/skills" target="_blank" rel="noopener noreferrer">pstack</a> project.
+          </span>
+        </p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Raw Data Embedded for Client-Side Interactivity -->
+  <script is:inline define:vars={{
+    SKILLS: skillsListRaw,
+    WORKFLOWS: workflowsList,
+    GRAPH_NODES: graphNodes,
+    GRAPH_EDGES: graphEdges,
+    CAT_COLORS: categoryColors,
+  }}>
+    window.__SKILLS_DATA__ = {
+      SKILLS,
+      WORKFLOWS,
+      GRAPH_NODES,
+      GRAPH_EDGES,
+      CAT_COLORS,
+    };
+  </script>
+
+  <script>
+    import '../scripts/skillsExplorer.js';
+  </script>
+</Layout>
+
+<style>
+  /* -------------------------------------------------------------------------- */
+  /* SKILLS SHOWCASE SPECIFIC STYLES                                            */
+  /* -------------------------------------------------------------------------- */
+  .skills-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top-nav {
+    border-bottom: 1px solid var(--border);
+    background: var(--card-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .nav-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.45rem 0.75rem;
+    border-radius: 9999px;
+    background: transparent;
+    transition: background-color 0.15s cubic-bezier(0.2, 0, 0, 1), color 0.15s ease;
+    min-height: 40px;
+  }
+
+  .nav-back:hover {
+    background: var(--card-bg-hover);
+    color: var(--accent);
+  }
+
+  .nav-back:active {
+    transform: scale(0.96);
+  }
+
+  .nav-arrow {
+    transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .nav-back:hover .nav-arrow {
+    transform: translateX(-3px);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .nav-links :global(.controls) {
+    position: static;
+    top: auto;
+    right: auto;
+    padding: 0.2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .nav-repo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-decoration: none;
+    padding: 0.45rem 0.8rem;
+    border-radius: 9999px;
+    border: 1px solid var(--border);
+    transition: all 0.15s cubic-bezier(0.2, 0, 0, 1);
+    min-height: 40px;
+  }
+
+  .nav-repo-link:hover {
+    color: var(--text);
+    border-color: var(--accent);
+    background: var(--accent-subtle);
+  }
+
+  .nav-repo-link:active {
+    transform: scale(0.96);
+  }
+
+  /* Main Container */
+  .skills-main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 6rem;
+    width: 100%;
+  }
+
+  /* Hero Section */
+  .skills-hero {
+    margin-bottom: 4rem;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    background: var(--accent-subtle);
+    border: 1px solid var(--border);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 750;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.25rem;
+    text-wrap: balance;
+  }
+
+  .hero-manifesto {
+    font-size: 1.125rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    max-width: 860px;
+    margin: 0 0 2.5rem;
+    text-wrap: pretty;
+  }
+
+  .hero-manifesto strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* Author Attribution Card */
+  .author-attribution {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+    background: var(--card-bg);
+    border: 1px solid var(--accent);
+    border-radius: 14px;
+    padding: 1.15rem 1.4rem;
+    margin-bottom: 2.25rem;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .author-attribution:hover {
+    background: var(--card-bg-hover);
+    transform: translateY(-1px);
+  }
+
+  .author-avatar-wrap {
+    flex-shrink: 0;
+  }
+
+  .author-avatar {
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    display: block;
+    object-fit: cover;
+  }
+
+  .author-info {
+    flex: 1 1 300px;
+  }
+
+  .author-label {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+
+  .author-text {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .author-text strong {
+    color: var(--text);
+  }
+
+  .author-link {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .author-link:hover {
+    color: var(--accent-hover);
+  }
+
+  .author-gh-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.45rem 0.85rem;
+    border-radius: 9999px;
+    background: var(--accent-subtle);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    transition: background-color 0.15s ease, transform 0.12s cubic-bezier(0.2, 0, 0, 1);
+    min-height: 38px;
+  }
+
+  .author-gh-btn:hover {
+    background: var(--accent);
+    color: #012b27;
+  }
+
+  .author-gh-btn:active {
+    transform: scale(0.96);
+  }
+
+  .author-pill {
+    background: var(--accent-subtle);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .pill-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+  }
+
+  .skills-footer-note {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.86rem;
+  }
+
+  .skills-footer-note a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* TL;DR Collapsible Box */
+  .tldr-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 2.25rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .tldr-box[open] {
+    border-color: var(--accent);
+    background: var(--card-bg-hover);
+    box-shadow: var(--shadow-md);
+  }
+
+  .tldr-summary {
+    padding: 1rem 1.35rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    user-select: none;
+    list-style: none;
+    transition: background-color 0.15s ease;
+    min-height: 48px;
+  }
+
+  .tldr-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .tldr-summary:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .tldr-summary:active {
+    transform: scale(0.99);
+  }
+
+  .tldr-summary-left {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .tldr-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    background: var(--accent-subtle);
+    border: 1px solid var(--accent);
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+  }
+
+  .tldr-prompt-text {
+    font-size: 0.92rem;
+    font-weight: 550;
+    color: var(--text);
+  }
+
+  .tldr-chevron-wrap {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+  }
+
+  .tldr-chevron {
+    transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .tldr-box[open] .tldr-chevron {
+    transform: rotate(180deg);
+  }
+
+  .tldr-content {
+    padding: 1.25rem 1.4rem 1.4rem;
+    border-top: 1px dashed var(--border);
+  }
+
+  .tldr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .tldr-item {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .tldr-item-num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--accent);
+    background: var(--accent-subtle);
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .tldr-item h4 {
+    margin: 0 0 0.35rem;
+    font-size: 0.98rem;
+    font-weight: 650;
+    color: var(--text);
+  }
+
+  .tldr-item p {
+    margin: 0;
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .tldr-item a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .tldr-rules-list {
+    margin: 0;
+    padding-left: 1.15rem;
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .tldr-rules-list li {
+    margin-bottom: 0.35rem;
+  }
+
+  .tldr-rules-list strong {
+    color: var(--text);
+  }
+
+  .tldr-punchline {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.85rem 1.2rem;
+    text-align: center;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+  }
+
+  .tldr-punchline-quote {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  /* Stats Ribbon */
+  .stats-ribbon {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1), border-color 0.15s ease;
+  }
+
+  .stat-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .stat-number {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  /* Section Block */
+  .section-block {
+    margin-bottom: 5rem;
+  }
+
+  .section-heading {
+    margin-bottom: 2rem;
+  }
+
+  .section-heading h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem;
+    text-wrap: balance;
+  }
+
+  .section-subtext {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 720px;
+    text-wrap: pretty;
+  }
+
+  /* Daily Practice Cards */
+  .practice-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .practice-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .practice-card:hover {
+    background: var(--card-bg-hover);
+    border-color: var(--accent);
+  }
+
+  .practice-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .practice-step {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--accent);
+    background: var(--accent-subtle);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .practice-skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag-pill {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.72rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .practice-title {
+    font-size: 1.15rem;
+    font-weight: 650;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .practice-summary {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin: 0;
+    flex: 1;
+  }
+
+  .practice-principle {
+    font-size: 0.82rem;
+    color: var(--accent);
+    padding-top: 0.65rem;
+    border-top: 1px dashed var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  .principle-bullet {
+    font-size: 0.65rem;
+    color: var(--accent);
+  }
+
+  /* Explorer Floating Toolbar (Island Dock) */
+  .explorer-toolbar {
+    position: sticky;
+    top: 70px;
+    z-index: 35;
+    background: rgba(1, 50, 45, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 0.65rem 0.85rem;
+    margin-bottom: 2.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.85rem;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 2px 8px rgba(0, 0, 0, 0.18);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  :global(:root[data-theme="light"]) .explorer-toolbar {
+    background: rgba(250, 250, 248, 0.9);
+    box-shadow: 0 12px 36px rgba(1, 66, 60, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .toolbar-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .tab-btn {
+    background: var(--card-bg);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 40px;
+    transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .tab-btn:hover {
+    color: var(--text);
+    border-color: var(--accent);
+  }
+
+  .tab-btn:active {
+    transform: scale(0.96);
+  }
+
+  .tab-btn.active {
+    background: var(--accent-subtle);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .search-box {
+    position: relative;
+    flex: 1 1 260px;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 0.85rem;
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+
+  .search-box input {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 0.6rem 2.4rem 0.6rem 2.4rem;
+    font-size: 0.86rem;
+    outline: none;
+    min-height: 40px;
+    transition: border-color 0.15s ease;
+  }
+
+  .search-box input:focus {
+    border-color: var(--accent);
+  }
+
+  .search-shortcut {
+    position: absolute;
+    right: 0.85rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.72rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+
+  .search-clear {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: none;
+    padding: 0.2rem 0.4rem;
+    line-height: 1;
+  }
+
+  .search-clear.visible {
+    display: block;
+  }
+
+  /* View Panels */
+  .view-panel {
+    margin-bottom: 3rem;
+  }
+
+  .view-panel.hidden {
+    display: none;
+  }
+
+  .panel-header {
+    margin-bottom: 1.25rem;
+  }
+
+  .panel-header h3,
+  .panel-header-row h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.35rem;
+  }
+
+  .panel-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .panel-header-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Filter Chips */
+  :global(.filter-chips-row),
+  :global(.cluster-filters) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  :global(.chip-btn) {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 9999px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  :global(.chip-btn:hover) {
+    background: var(--card-bg-hover);
+    color: var(--text);
+    border-color: var(--accent);
+  }
+
+  :global(.chip-btn:active) {
+    transform: scale(0.96);
+  }
+
+  :global(.chip-btn.active) {
+    background: var(--accent-subtle);
+    color: var(--accent);
+    border-color: var(--accent);
+    font-weight: 600;
+    box-shadow: 0 0 12px rgba(95, 191, 176, 0.2);
+  }
+
+  :global(.chip-dot) {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  /* Interactive Graph */
+  .graph-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 1.25rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  @media (max-width: 960px) {
+    .graph-wrapper {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .graph-canvas-container {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  svg#skill-graph {
+    width: 100%;
+    height: auto;
+    display: block;
+    user-select: none;
+  }
+
+  :global(.graph-edge) {
+    stroke: rgba(255, 255, 255, 0.18);
+    stroke-width: 1.4;
+    fill: none;
+    opacity: 0.55;
+    transition: opacity 0.15s ease, stroke 0.15s ease, stroke-width 0.15s ease;
+  }
+
+  :global(.graph-edge.dim) {
+    opacity: 0.08;
+  }
+
+  :global(.graph-edge.active) {
+    stroke: var(--accent);
+    stroke-width: 2.6;
+    opacity: 1;
+  }
+
+  :global(.graph-node) {
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+
+  :global(.graph-node.dim) {
+    opacity: 0.22;
+  }
+
+  :global(.graph-node circle) {
+    stroke: var(--bg);
+    stroke-width: 2.2;
+    transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1), stroke 0.15s ease;
+  }
+
+  :global(.graph-node:hover circle),
+  :global(.graph-node.selected circle) {
+    stroke: #ffffff;
+    stroke-width: 3;
+    filter: drop-shadow(0 0 6px var(--accent));
+  }
+
+  :global(.graph-node text) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 10.5px;
+    fill: var(--text);
+    pointer-events: none;
+    text-anchor: middle;
+    font-weight: 500;
+  }
+
+  .graph-inspector {
+    background: var(--card-bg-hover);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .inspector-empty {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+  }
+
+  .inspector-empty h4 {
+    color: var(--text);
+    margin: 0 0 0.5rem;
+  }
+
+  /* Workflows Grid */
+  .workflows-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 1.25rem;
+  }
+
+  :global(.wf-card) {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.15s ease;
+  }
+
+  :global(.wf-card:hover) {
+    border-color: var(--accent);
+  }
+
+  :global(.wf-head) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  :global(.wf-head h4) {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 650;
+  }
+
+  :global(.wf-tag) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.72rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  :global(.wf-desc) {
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  :global(.wf-steps) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.4rem;
+  }
+
+  :global(.wf-step) {
+    display: inline-flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.4rem 0.65rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.15s ease, transform 0.12s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  :global(.wf-step:hover) {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  :global(.wf-step:active) {
+    transform: scale(0.96);
+  }
+
+  :global(.wf-step-name) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.76rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  :global(.wf-step-role) {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+  }
+
+  :global(.wf-arrow) {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  /* Skill Cards Grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.25rem;
+  }
+
+  :global(.skill-card) {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  :global(.skill-card:hover) {
+    background: var(--card-bg-hover);
+    border-color: var(--border-strong, var(--accent));
+  }
+
+  :global(.skill-card.highlight) {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 2px var(--accent-subtle), 0 10px 25px rgba(95, 191, 176, 0.25);
+    transform: translateY(-2px);
+  }
+
+  :global(.card-top) {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  :global(.card-title-wrap) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  :global(.card-title) {
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  :global(.card-cmd) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.76rem;
+    color: var(--accent);
+  }
+
+  :global(.badges) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: flex-end;
+  }
+
+  :global(.cat-badge) {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 9999px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+
+  :global(.manual-badge) {
+    font-size: 0.68rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    padding: 0.2rem 0.45rem;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  :global(.card-summary) {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  :global(.example-box) {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.65rem 0.85rem;
+    position: relative;
+  }
+
+  :global(.example-label) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+  }
+
+  :global(.copy-btn) {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 5px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: color 0.12s ease, border-color 0.12s ease;
+  }
+
+  :global(.copy-btn:hover) {
+    color: var(--text);
+    border-color: var(--accent);
+  }
+
+  :global(.copy-btn:active) {
+    transform: scale(0.96);
+  }
+
+  :global(.example-code) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.78rem;
+    color: #bae6fd;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  :global(.relations-block) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding-top: 0.6rem;
+    border-top: 1px dashed var(--border);
+  }
+
+  :global(.rel-row) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  :global(.rel-lbl) {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    min-width: 80px;
+    font-weight: 600;
+  }
+
+  :global(.rel-link) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.72rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.12s ease;
+  }
+
+  :global(.rel-link:hover) {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  :global(.rel-link:active) {
+    transform: scale(0.96);
+  }
+
+  /* Empty State */
+  :global(.empty-state) {
+    grid-column: 1 / -1;
+    background: var(--card-bg);
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  /* Bottom Action Bar */
+  .bottom-action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #012b27;
+    border: 1px solid transparent;
+    padding: 0.65rem 1.4rem;
+    border-radius: 9999px;
+    font-weight: 650;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 40px;
+    transition: background-color 0.15s ease, transform 0.12s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-hover);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.96);
+  }
+
+  .btn-secondary {
+    background: var(--card-bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.65rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 550;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 40px;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    background: var(--card-bg-hover);
+  }
+
+  .btn-secondary:active {
+    transform: scale(0.96);
+  }
+</style>
