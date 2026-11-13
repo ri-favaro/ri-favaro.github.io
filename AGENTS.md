@@ -112,3 +112,13 @@ Antes de concluir qualquer alteração no código:
 3. [ ] **Suporte a Temas**: Testar aparência tanto no modo escuro (*Dark Mode*) quanto no claro (*Light Mode*).
 4. [ ] **Internacionalização**: Se novos textos forem inseridos na interface, adicionar chaves e traduções nos dicionários PT e EN correspondentes.
 5. [ ] **Validação Estática**: Validar que não há erros de sintaxe ou referências quebradas no console do navegador.
+
+---
+
+## 7. Políticas de Pull Request e Regras de Merge
+
+As políticas de abertura de PR, critérios de auditoria pelo `@Gate` e a matriz de decisão para **Auto-Merge vs. Aprovação Manual do Ricardo** estão documentadas em detalhes no arquivo [`MERGE_RULES.md`](./MERGE_RULES.md).
+
+- **Regra Geral**: Todo fluxo deve passar por worktree isolada (`G:\orca-workspaces\ri-favaro.github.io\<slug>`), auditoria do `@Gate` e abertura de PR via `gh` (conta `ri-favaro`).
+- **Autonomia de Merge**: Consulte o [`MERGE_RULES.md`](./MERGE_RULES.md) antes de qualquer ação de merge. Apenas tarefas de baixo risco (typos, metadados menores, docs) têm auto-merge permitido; alterações de UI, projetos, dependências e arquitetura exigem aprovação manual prévia do Ricardo.
+
