@@ -1,7 +1,12 @@
 ---
+interface Props {
+  inline?: boolean;
+}
+
+const { inline = false } = Astro.props;
 ---
 
-<div class="controls">
+<div class={inline ? 'controls controls-inline' : 'controls'}>
   <button id="theme-toggle" aria-label="Alternar tema" title="Alternar tema">
     <span class="theme-icon" aria-hidden="true">🌙</span>
   </button>
@@ -42,7 +47,6 @@
     });
   }
 
-  // Run on initial load and after view transitions (if added)
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setupControls);
   } else {

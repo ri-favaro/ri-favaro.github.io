@@ -1,15 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Controls from '../components/Controls.astro';
+import SiteNav from '../components/SiteNav.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { content, skillsList, socialLinks } from '../data/translations';
 import { projects } from '../data/projects';
 ---
 
 <Layout>
-  <Controls />
+  <SiteNav active="home" />
 
-  <main class="container">
+  <main class="container container-with-nav">
     <!-- Hero Section -->
     <section class="hero" id="hero">
       <div class="hero-avatar-wrapper">

@@ -1,0 +1,193 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import {
+  resumeMeta,
+  experiences,
+  education,
+  skillGroups,
+  languages,
+} from '../data/resumeData';
+import { content, socialLinks } from '../data/translations';
+---
+
+<Layout
+  title="Currículo — Luiz Ricardo Favaro"
+  description="Currículo de Luiz Ricardo Favaro: experiência em integrações, IA em produção, Node.js, TypeScript, Next.js e formação acadêmica."
+>
+  <SiteNav active="resume" />
+
+  <main class="container container-with-nav resume-page">
+    <header class="resume-header">
+      <div class="resume-header-text">
+        <p class="page-eyebrow">
+          <span data-lang="pt">CURRÍCULO</span>
+          <span data-lang="en">RESUME</span>
+        </p>
+        <h1>{resumeMeta.name}</h1>
+        <p class="resume-role">
+          <span data-lang="pt">{resumeMeta.role.pt}</span>
+          <span data-lang="en">{resumeMeta.role.en}</span>
+        </p>
+        <p class="resume-location">{resumeMeta.location}</p>
+      </div>
+
+      <div class="resume-actions">
+        <a
+          href={resumeMeta.pdfPath}
+          download="Luiz-Ricardo-Favaro-CV.pdf"
+          class="btn-primary"
+        >
+          <span data-lang="pt">Baixar PDF</span>
+          <span data-lang="en">Download PDF</span>
+          <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+    </header>
+
+    <section class="resume-section">
+      <h2>
+        <span data-lang="pt">Resumo Profissional</span>
+        <span data-lang="en">Summary</span>
+      </h2>
+      <p class="resume-summary">
+        <span data-lang="pt">{resumeMeta.summary.pt}</span>
+        <span data-lang="en">{resumeMeta.summary.en}</span>
+      </p>
+    </section>
+
+    <section class="resume-section">
+      <h2>
+        <span data-lang="pt">Experiência Profissional</span>
+        <span data-lang="en">Experience</span>
+      </h2>
+
+      <div class="resume-timeline">
+        {experiences.map((exp) => (
+          <article class="resume-card">
+            <div class="resume-card-head">
+              <div>
+                <h3>{exp.company}</h3>
+                <p class="resume-card-role">
+                  <span data-lang="pt">{exp.role.pt}</span>
+                  <span data-lang="en">{exp.role.en}</span>
+                </p>
+              </div>
+              <div class="resume-card-meta">
+                <span class="tabular">
+                  <span data-lang="pt">{exp.period.pt}</span>
+                  <span data-lang="en">{exp.period.en}</span>
+                </span>
+                <span>{exp.location}</span>
+              </div>
+            </div>
+            <ul class="resume-list">
+              {exp.highlights.pt.map((item, idx) => (
+                <li>
+                  <span data-lang="pt">{item}</span>
+                  <span data-lang="en">{exp.highlights.en[idx]}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2>
+        <span data-lang="pt">Formação Acadêmica</span>
+        <span data-lang="en">Education</span>
+      </h2>
+
+      <div class="resume-timeline">
+        {education.map((edu) => (
+          <article class="resume-card">
+            <div class="resume-card-head">
+              <div>
+                <h3>
+                  <span data-lang="pt">{edu.degree.pt}</span>
+                  <span data-lang="en">{edu.degree.en}</span>
+                </h3>
+                <p class="resume-card-role">{edu.institution}</p>
+              </div>
+              <div class="resume-card-meta">
+                <span class="tabular">
+                  <span data-lang="pt">{edu.status.pt}</span>
+                  <span data-lang="en">{edu.status.en}</span>
+                </span>
+              </div>
+            </div>
+            <p class="resume-card-details">
+              <span data-lang="pt">{edu.details.pt}</span>
+              <span data-lang="en">{edu.details.en}</span>
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2>
+        <span data-lang="pt">Competências Técnicas</span>
+        <span data-lang="en">Technical Skills</span>
+      </h2>
+
+      <div class="resume-skills-grid">
+        {skillGroups.map((group) => (
+          <div class="resume-skill-group">
+            <h3>
+              <span data-lang="pt">{group.category.pt}</span>
+              <span data-lang="en">{group.category.en}</span>
+            </h3>
+            <div class="tags">
+              {group.items.map((item) => (
+                <span>{item}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2>
+        <span data-lang="pt">Idiomas</span>
+        <span data-lang="en">Languages</span>
+      </h2>
+
+      <ul class="resume-languages">
+        {languages.map((lang) => (
+          <li>
+            <strong>
+              <span data-lang="pt">{lang.name.pt}</span>
+              <span data-lang="en">{lang.name.en}</span>
+            </strong>
+            <span>
+              <span data-lang="pt">{lang.level.pt}</span>
+              <span data-lang="en">{lang.level.en}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="social-links">
+      {socialLinks.map((item) => (
+        <a
+          href={item.url}
+          target={item.url.startsWith('mailto') ? '_self' : '_blank'}
+          rel={item.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+    <p class="copyright">
+      <span data-lang="pt">{content.pt.footer.copyright}</span>
+      <span data-lang="en">{content.en.footer.copyright}</span>
+    </p>
+  </footer>
+</Layout>
