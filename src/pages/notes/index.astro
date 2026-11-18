@@ -1,0 +1,116 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Controls from '../../components/Controls.astro';
+import { content, socialLinks } from '../../data/translations';
+
+const allNotes = await getCollection('notes');
+
+const grouped = new Map<
+  string,
+  {
+    slug: string;
+    publishedAt: string;
+    pt?: (typeof allNotes)[number];
+    en?: (typeof allNotes)[number];
+  }
+>();
+
+for (const entry of allNotes) {
+  const current = grouped.get(entry.data.noteSlug) ?? {
+    slug: entry.data.noteSlug,
+    publishedAt: entry.data.publishedAt,
+  };
+  if (entry.data.lang === 'pt') current.pt = entry;
+  if (entry.data.lang === 'en') current.en = entry;
+  grouped.set(entry.data.noteSlug, current);
+}
+
+const notes = Array.from(grouped.values()).sort((a, b) =>
+  b.publishedAt.localeCompare(a.publishedAt),
+);
+---
+
+<Layout
+  title="Notas Técnicas — Luiz Ricardo Favaro"
+  description="Notas curtas de engenharia de software sobre IA local, RAG vetorial, integrações e arquitetura."
+>
+  <Controls />
+
+  <main class="container">
+    <div class="page-top-bar">
+      <a href="/" class="back-link">
+        <span aria-hidden="true">←</span>
+        <span data-lang="pt">Voltar ao Portfólio</span>
+        <span data-lang="en">Back to Portfolio</span>
+      </a>
+      <a href="/now" class="back-link">
+        <span data-lang="pt">Página /now →</span>
+        <span data-lang="en">/now Page →</span>
+      </a>
+    </div>
+
+    <header class="page-intro">
+      <p class="page-eyebrow">
+        <span data-lang="pt">NOTAS DE ENGENHARIA</span>
+        <span data-lang="en">ENGINEERING NOTES</span>
+      </p>
+      <h1>
+        <span data-lang="pt">Notas</span>
+        <span data-lang="en">Notes</span>
+      </h1>
+      <p class="page-lead">
+        <span data-lang="pt">Anotações técnicas diretas sobre decisões de arquitetura, IA local e sistemas em produção.</span>
+        <span data-lang="en">Concise technical notes on architecture decisions, local AI, and production systems.</span>
+      </p>
+    </header>
+
+    <section class="notes-list" aria-label="Lista de notas técnicas">
+      {notes.map((item) => (
+        <article class="project-card">
+          <div class="note-meta tabular">{item.publishedAt}</div>
+          <h3>
+            <a class="note-title-link" href={`/notes/${item.slug}`}>
+              <span data-lang="pt">{item.pt?.data.title}</span>
+              <span data-lang="en">{item.en?.data.title}</span>
+            </a>
+          </h3>
+          <p>
+            <span data-lang="pt">{item.pt?.data.summary}</span>
+            <span data-lang="en">{item.en?.data.summary}</span>
+          </p>
+          <div class="tags">
+            {(item.pt?.data.tags ?? []).map((tag) => (
+              <span>{tag}</span>
+            ))}
+          </div>
+          <div class="project-actions">
+            <a class="project-link" href={`/notes/${item.slug}`}>
+              <span data-lang="pt">Ler nota</span>
+              <span data-lang="en">Read note</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+      ))}
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="social-links">
+      {socialLinks.map((item) => (
+        <a
+          href={item.url}
+          target={item.url.startsWith('mailto') ? '_self' : '_blank'}
+          rel={item.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+    <p class="copyright">
+      <span data-lang="pt">{content.pt.footer.copyright}</span>
+      <span data-lang="en">{content.en.footer.copyright}</span>
+    </p>
+  </footer>
+</Layout>

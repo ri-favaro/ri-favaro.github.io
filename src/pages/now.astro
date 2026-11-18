@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Controls from '../components/Controls.astro';
+import { nowItems, nowMeta } from '../data/nowData';
+import { content, socialLinks } from '../data/translations';
+---
+
+<Layout
+  title="Now — Luiz Ricardo Favaro"
+  description="O que Luiz Ricardo Favaro está construindo, integrando e estudando atualmente."
+>
+  <Controls />
+
+  <main class="container">
+    <div class="page-top-bar">
+      <a href="/" class="back-link">
+        <span aria-hidden="true">←</span>
+        <span data-lang="pt">Voltar ao Portfólio</span>
+        <span data-lang="en">Back to Portfolio</span>
+      </a>
+      <a href="/notes" class="back-link">
+        <span data-lang="pt">Ver Notas →</span>
+        <span data-lang="en">View Notes →</span>
+      </a>
+    </div>
+
+    <header class="page-intro">
+      <p class="page-eyebrow tabular">
+        <span data-lang="pt">NOW • ATUALIZADO EM {nowMeta.updatedAt}</span>
+        <span data-lang="en">NOW • UPDATED {nowMeta.updatedAt}</span>
+      </p>
+      <h1>
+        <span data-lang="pt">O que estou fazendo agora</span>
+        <span data-lang="en">What I’m focused on now</span>
+      </h1>
+      <p class="page-lead">
+        <span data-lang="pt">{nowMeta.intro.pt}</span>
+        <span data-lang="en">{nowMeta.intro.en}</span>
+      </p>
+    </header>
+
+    <section class="now-grid" aria-label="Foco atual">
+      {nowItems.map((item) => (
+        <article class="now-card">
+          <span class="now-tag">
+            <span data-lang="pt">{item.tag.pt}</span>
+            <span data-lang="en">{item.tag.en}</span>
+          </span>
+          <h2>
+            <span data-lang="pt">{item.title.pt}</span>
+            <span data-lang="en">{item.title.en}</span>
+          </h2>
+          <p>
+            <span data-lang="pt">{item.description.pt}</span>
+            <span data-lang="en">{item.description.en}</span>
+          </p>
+        </article>
+      ))}
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="social-links">
+      {socialLinks.map((item) => (
+        <a
+          href={item.url}
+          target={item.url.startsWith('mailto') ? '_self' : '_blank'}
+          rel={item.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+    <p class="copyright">
+      <span data-lang="pt">{content.pt.footer.copyright}</span>
+      <span data-lang="en">{content.en.footer.copyright}</span>
+    </p>
+  </footer>
+</Layout>

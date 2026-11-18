@@ -891,3 +891,140 @@ h2::after {
     background: #fff !important;
   }
 }
+
+/* /now & /notes Pages */
+.page-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+}
+
+.back-link:active {
+  transform: scale(0.96);
+}
+
+.now-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.now-card {
+  padding: 1.35rem 1.4rem;
+  border-radius: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+}
+
+.now-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.now-card h2 {
+  font-size: 1.12rem;
+  margin: 0 0 0.55rem;
+  text-wrap: balance;
+}
+
+.now-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.96rem;
+  text-wrap: pretty;
+}
+
+.notes-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.note-meta {
+  font-size: 0.82rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.note-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.note-title-link:hover {
+  color: var(--accent);
+}
+
+.note-article-header {
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.note-article-header .tags {
+  margin-top: 1.15rem;
+}
+
+.note-prose {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.note-prose h2 {
+  color: var(--text);
+  font-size: 1.25rem;
+  margin: 2rem 0 0.75rem;
+  text-wrap: balance;
+}
+
+.note-prose p,
+.note-prose li {
+  text-wrap: pretty;
+}
+
+.note-prose strong {
+  color: var(--text);
+}
+
+.note-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.88em;
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  color: var(--accent);
+}
+
+.note-prose ul {
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.footer-pages {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.footer-pages a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: color 150ms ease;
+}
+
+.footer-pages a:hover {
+  color: var(--accent);
+}
