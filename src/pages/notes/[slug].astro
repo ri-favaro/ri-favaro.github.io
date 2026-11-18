@@ -1,0 +1,94 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Controls from '../../components/Controls.astro';
+import { content, socialLinks } from '../../data/translations';
+
+export async function getStaticPaths() {
+  const allNotes = await getCollection('notes');
+  const slugs = [...new Set(allNotes.map((entry) => entry.data.noteSlug))];
+
+  return slugs.map((slug) => {
+    const ptEntry = allNotes.find((e) => e.data.noteSlug === slug && e.data.lang === 'pt');
+    const enEntry = allNotes.find((e) => e.data.noteSlug === slug && e.data.lang === 'en');
+    return {
+      params: { slug },
+      props: { ptEntry, enEntry },
+    };
+  });
+}
+
+const { ptEntry, enEntry } = Astro.props;
+const ptRendered = ptEntry ? await render(ptEntry) : null;
+const enRendered = enEntry ? await render(enEntry) : null;
+const PtContent = ptRendered?.Content;
+const EnContent = enRendered?.Content;
+---
+
+<Layout
+  title={`${ptEntry?.data.title ?? enEntry?.data.title} — Luiz Ricardo Favaro`}
+  description={ptEntry?.data.summary ?? enEntry?.data.summary}
+>
+  <Controls />
+
+  <main class="container">
+    <div class="page-top-bar">
+      <a href="/notes" class="back-link">
+        <span aria-hidden="true">←</span>
+        <span data-lang="pt">Todas as notas</span>
+        <span data-lang="en">All notes</span>
+      </a>
+    </div>
+
+    <article class="note-article">
+      <header class="note-article-header">
+        <p class="page-eyebrow tabular">
+          {ptEntry?.data.publishedAt ?? enEntry?.data.publishedAt}
+        </p>
+        <h1>
+          <span data-lang="pt">{ptEntry?.data.title}</span>
+          <span data-lang="en">{enEntry?.data.title}</span>
+        </h1>
+        <p class="page-lead">
+          <span data-lang="pt">{ptEntry?.data.summary}</span>
+          <span data-lang="en">{enEntry?.data.summary}</span>
+        </p>
+        <div class="tags">
+          {(ptEntry?.data.tags ?? []).map((tag) => (
+            <span>{tag}</span>
+          ))}
+        </div>
+      </header>
+
+      {PtContent && (
+        <div class="note-prose" data-lang="pt">
+          <PtContent />
+        </div>
+      )}
+
+      {EnContent && (
+        <div class="note-prose" data-lang="en">
+          <EnContent />
+        </div>
+      )}
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="social-links">
+      {socialLinks.map((item) => (
+        <a
+          href={item.url}
+          target={item.url.startsWith('mailto') ? '_self' : '_blank'}
+          rel={item.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+    <p class="copyright">
+      <span data-lang="pt">{content.pt.footer.copyright}</span>
+      <span data-lang="en">{content.en.footer.copyright}</span>
+    </p>
+  </footer>
+</Layout>
