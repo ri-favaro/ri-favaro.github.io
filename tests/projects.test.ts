@@ -33,6 +33,24 @@ describe('Lista de Projetos (projects.ts)', () => {
     }
   });
 
+  it('cada projeto deve possuir dados bilíngues completos de case study', () => {
+    for (const project of projects) {
+      expect(project.caseStudy.period.trim().length).toBeGreaterThan(0);
+      expect(project.caseStudy.role.pt.trim().length).toBeGreaterThan(0);
+      expect(project.caseStudy.role.en.trim().length).toBeGreaterThan(0);
+      expect(project.caseStudy.context.pt.trim().length).toBeGreaterThan(0);
+      expect(project.caseStudy.context.en.trim().length).toBeGreaterThan(0);
+
+      expect(project.caseStudy.architecture.pt.length).toBeGreaterThan(0);
+      expect(project.caseStudy.architecture.pt.length).toBe(
+        project.caseStudy.architecture.en.length,
+      );
+
+      expect(project.caseStudy.highlights.pt.length).toBeGreaterThan(0);
+      expect(project.caseStudy.highlights.pt.length).toBe(project.caseStudy.highlights.en.length);
+    }
+  });
+
   it('se houver link externo, deve ser URL válida e conter linkText bilíngue', () => {
     for (const project of projects) {
       if (project.link) {

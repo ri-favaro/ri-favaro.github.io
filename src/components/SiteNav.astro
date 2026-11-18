@@ -1,0 +1,34 @@
+---
+import Controls from './Controls.astro';
+
+interface Props {
+  active?: 'home' | 'projects' | 'skills' | 'resume';
+}
+
+const { active = 'home' } = Astro.props;
+
+const navItems = [
+  { key: 'home', href: '/', pt: 'Início', en: 'Home' },
+  { key: 'projects', href: '/projects', pt: 'Projetos', en: 'Projects' },
+  { key: 'skills', href: '/skills', pt: 'Skills', en: 'Skills' },
+  { key: 'resume', href: '/resume', pt: 'Currículo', en: 'Resume' },
+] as const;
+---
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <nav class="site-nav" aria-label="Navegação principal">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={active === item.key ? 'site-nav-link is-active' : 'site-nav-link'}
+          aria-current={active === item.key ? 'page' : undefined}
+        >
+          <span data-lang="pt">{item.pt}</span>
+          <span data-lang="en">{item.en}</span>
+        </a>
+      ))}
+    </nav>
+    <Controls inline />
+  </div>
+</header>

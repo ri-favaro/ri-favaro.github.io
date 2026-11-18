@@ -1,3 +1,23 @@
+export interface ProjectCaseStudy {
+  period: string;
+  role: {
+    pt: string;
+    en: string;
+  };
+  context: {
+    pt: string;
+    en: string;
+  };
+  architecture: {
+    pt: string[];
+    en: string[];
+  };
+  highlights: {
+    pt: string[];
+    en: string[];
+  };
+}
+
 export interface Project {
   id: string;
   title: {
@@ -15,6 +35,7 @@ export interface Project {
     en: string;
   };
   isInternal?: boolean;
+  caseStudy: ProjectCaseStudy;
 }
 
 export const projects: Project[] = [
@@ -34,6 +55,39 @@ export const projects: Project[] = [
       pt: 'Ver no GitHub',
       en: 'View on GitHub',
     },
+    caseStudy: {
+      period: '2026',
+      role: {
+        pt: 'Criador & Engenheiro Principal',
+        en: 'Creator & Lead Engineer',
+      },
+      context: {
+        pt: 'Projetado para operar como assistente pessoal autônomo em máquina local, mantendo baixo consumo de memória e isolamento estrito na execução de ferramentas e acesso ao sistema de arquivos.',
+        en: 'Designed to run as an autonomous personal assistant on local hardware, keeping memory footprint low while enforcing strict isolation on tool execution and filesystem access.',
+      },
+      architecture: {
+        pt: [
+          'Raciocínio desacoplado (Decoupled Reasoning) com parser FSM em streaming sem latência adicional na resposta ao usuário.',
+          'Pipeline de RAG vetorial local com LanceDB e embeddings EmbeddingGemma-2 (768 dimensões) consumindo ~270MB de RAM e indexação incremental por SHA-256.',
+          'Runner de orquestração técnica com whitelist explícita de comandos, controle de timeout e sandbox de filesystem (path-guard).',
+        ],
+        en: [
+          'Decoupled Reasoning cognitive loop with a streaming FSM parser adding zero extra latency to user-facing responses.',
+          'Local vector RAG pipeline built on LanceDB and 768d EmbeddingGemma-2 (~270MB RAM) with SHA-256 incremental indexing.',
+          'Technical orchestration runner enforcing command whitelisting, timeout limits, and strict filesystem sandboxing (path-guard).',
+        ],
+      },
+      highlights: {
+        pt: [
+          '13+ suítes de testes automatizados com Jest e Node.js Test Runner.',
+          'Stack em Node.js 22+, TypeScript 5.8+, Vercel AI SDK, Ollama, grammY e Zod.',
+        ],
+        en: [
+          '13+ automated test suites powered by Jest and Node.js Test Runner.',
+          'Built with Node.js 22+, TypeScript 5.8+, Vercel AI SDK, Ollama, grammY, and Zod.',
+        ],
+      },
+    },
   },
   {
     id: 'tcc',
@@ -46,6 +100,37 @@ export const projects: Project[] = [
       en: "Interactive system for children's musical learning (ages 4-8) combining embedded hardware and an Android mobile app. Field-tested with educators, awarded top honors (10/10) by the evaluation committee, and published at the COBRICS 2024 conference.",
     },
     tags: ['ESP32', 'RFID', 'Firebase', 'Android', 'C/C++'],
+    caseStudy: {
+      period: '2024',
+      role: {
+        pt: 'Autor & Engenheiro de Hardware/Software',
+        en: 'Author & Hardware/Software Engineer',
+      },
+      context: {
+        pt: 'Trabalho de Conclusão de Curso em Engenharia da Computação (UNISANTA) voltado ao ensino lúdico-musical para crianças de 4 a 8 anos com feedback físico imediato.',
+        en: 'Computer Engineering Capstone Project (UNISANTA) designed for playful musical education for children aged 4–8 with immediate physical feedback.',
+      },
+      architecture: {
+        pt: [
+          'Leitura de peças musicais físicas via tags RFID conectadas a microcontrolador ESP32 em C/C++.',
+          'Sincronização de eventos em tempo real via Firebase Realtime Database entre o hardware embarcado e o aplicativo móvel Android.',
+        ],
+        en: [
+          'Physical musical token detection using RFID tags wired to an ESP32 microcontroller programmed in C/C++.',
+          'Real-time state synchronization via Firebase Realtime Database bridging embedded hardware and the Android app.',
+        ],
+      },
+      highlights: {
+        pt: [
+          'Nota máxima (10/10) na banca avaliadora de Engenharia da Computação (UNISANTA).',
+          'Artigo científico publicado nos anais do congresso COBRICS 2024 após validação em campo com pedagogos.',
+        ],
+        en: [
+          'Awarded maximum grade (10/10) by the UNISANTA Computer Engineering evaluation committee.',
+          'Scientific paper published in the COBRICS 2024 conference proceedings following field validation with educators.',
+        ],
+      },
+    },
   },
   {
     id: 'rmda',
@@ -63,6 +148,37 @@ export const projects: Project[] = [
       pt: 'Ver no GitHub',
       en: 'View on GitHub',
     },
+    caseStudy: {
+      period: '2023',
+      role: {
+        pt: 'Desenvolvedor IoT & Cloud',
+        en: 'IoT & Cloud Developer',
+      },
+      context: {
+        pt: 'Prova de conceito de telemetria remota para ambientes sem cobertura Wi-Fi tradicional, utilizando comunicação de longo alcance e baixo consumo energético.',
+        en: 'Remote telemetry proof-of-concept for environments without traditional Wi-Fi coverage, leveraging long-range, low-power radio communication.',
+      },
+      architecture: {
+        pt: [
+          'Coleta de sensores embarcados e transmissão de pacotes via rede LPWAN (LoRaWAN) roteados pela The Things Network (TTN).',
+          'Ingestão, processamento e exibição dos dados em tempo real em VM hospedada no Microsoft Azure com dashboard gráfico.',
+        ],
+        en: [
+          'Embedded sensor sampling and telemetry packet transmission over LPWAN (LoRaWAN) routed through The Things Network (TTN).',
+          'Real-time data ingestion, processing, and visualization on a Microsoft Azure VM with a live graphical dashboard.',
+        ],
+      },
+      highlights: {
+        pt: [
+          'Comunicação ponta a ponta entre camada física IoT e infraestrutura em nuvem.',
+          'Código-fonte e documentação disponíveis no GitHub.',
+        ],
+        en: [
+          'End-to-end telemetry pipeline bridging physical IoT hardware and cloud infrastructure.',
+          'Source code and documentation available on GitHub.',
+        ],
+      },
+    },
   },
   {
     id: 'widrow-hoff',
@@ -79,6 +195,37 @@ export const projects: Project[] = [
     linkText: {
       pt: 'Ver no GitHub',
       en: 'View on GitHub',
+    },
+    caseStudy: {
+      period: '2023',
+      role: {
+        pt: 'Autor',
+        en: 'Author',
+      },
+      context: {
+        pt: 'Ferramenta visual didática para observar passo a passo a regra delta (LMS) ajustando os pesos sinápticos de um neurônio Adaline diretamente no navegador, sem dependências externas.',
+        en: 'Visual educational tool to observe the delta rule (LMS) step by step as it adjusts an Adaline neuron’s synaptic weights directly in the browser without external dependencies.',
+      },
+      architecture: {
+        pt: [
+          'Renderização em HTML5 Canvas com plotagem interativa de pontos de treino e atualização contínua da reta de separação linear.',
+          'Cálculo iterativo do erro quadrático e atualização de pesos em JavaScript puro.',
+        ],
+        en: [
+          'HTML5 Canvas rendering with interactive training point plotting and live linear decision boundary updates.',
+          'Iterative squared-error computation and weight updates implemented in vanilla JavaScript.',
+        ],
+      },
+      highlights: {
+        pt: [
+          'Execução 100% client-side sem necessidade de backend ou bibliotecas externas.',
+          'Visualização em tempo real da convergência dos pesos.',
+        ],
+        en: [
+          '100% client-side execution with zero backend or external library dependencies.',
+          'Real-time visualization of weight convergence.',
+        ],
+      },
     },
   },
 ];
