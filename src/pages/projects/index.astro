@@ -1,0 +1,55 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { projects } from '../../data/projects';
+import { content, socialLinks } from '../../data/translations';
+---
+
+<Layout
+  title="Projetos & Arquitetura — Luiz Ricardo Favaro"
+  description="Estudos de caso e arquitetura técnica dos projetos de engenharia de software, IA local e IoT de Luiz Ricardo Favaro."
+>
+  <SiteNav active="projects" />
+
+  <main class="container container-with-nav">
+    <header class="page-intro">
+      <p class="page-eyebrow">
+        <span data-lang="pt">ENGENHARIA &amp; ESTUDOS DE CASO</span>
+        <span data-lang="en">ENGINEERING &amp; CASE STUDIES</span>
+      </p>
+      <h1>
+        <span data-lang="pt">Projetos</span>
+        <span data-lang="en">Projects</span>
+      </h1>
+      <p class="page-lead">
+        <span data-lang="pt">Detalhamento técnico, decisões de arquitetura e resultados práticos dos projetos publicados.</span>
+        <span data-lang="en">Technical breakdown, architecture decisions, and practical outcomes across published projects.</span>
+      </p>
+    </header>
+
+    <section class="projects" aria-label="Lista de projetos">
+      {projects.map((project) => (
+        <ProjectCard project={project} />
+      ))}
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="social-links">
+      {socialLinks.map((item) => (
+        <a
+          href={item.url}
+          target={item.url.startsWith('mailto') ? '_self' : '_blank'}
+          rel={item.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+    <p class="copyright">
+      <span data-lang="pt">{content.pt.footer.copyright}</span>
+      <span data-lang="en">{content.en.footer.copyright}</span>
+    </p>
+  </footer>
+</Layout>

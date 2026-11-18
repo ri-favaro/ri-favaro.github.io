@@ -11,8 +11,10 @@ const { project } = Astro.props;
 <article class="project-card">
   <div class="project-header">
     <h3>
-      <span data-lang="pt">{project.title.pt}</span>
-      <span data-lang="en">{project.title.en}</span>
+      <a class="project-title-link" href={`/projects/${project.id}`}>
+        <span data-lang="pt">{project.title.pt}</span>
+        <span data-lang="en">{project.title.en}</span>
+      </a>
     </h3>
   </div>
 
@@ -27,10 +29,16 @@ const { project } = Astro.props;
     ))}
   </div>
 
-  {project.link && (
-    <div class="project-actions">
+  <div class="project-actions">
+    <a class="project-link" href={`/projects/${project.id}`}>
+      <span data-lang="pt">Ver arquitetura</span>
+      <span data-lang="en">View case study</span>
+      <span aria-hidden="true">→</span>
+    </a>
+
+    {project.link && (
       <a
-        class="project-link"
+        class="project-link project-link-secondary"
         href={project.link}
         target={project.isInternal ? '_self' : '_blank'}
         rel={project.isInternal ? undefined : 'noopener noreferrer'}
@@ -39,6 +47,6 @@ const { project } = Astro.props;
         <span data-lang="en">{project.linkText?.en || 'View'}</span>
         <span aria-hidden="true">{project.isInternal ? '→' : '↗'}</span>
       </a>
-    </div>
-  )}
+    )}
+  </div>
 </article>

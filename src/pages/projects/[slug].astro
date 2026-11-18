@@ -1,0 +1,170 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import { projects } from '../../data/projects';
+import { content, socialLinks } from '../../data/translations';
+
+export function getStaticPaths() {
+  return projects.map((project, index) => ({
+    params: { slug: project.id },
+    props: {
+      project,
+      prevProject: index > 0 ? projects[index - 1] : null,
+      nextProject: index < projects.length - 1 ? projects[index + 1] : null,
+    },
+  }));
+}
+
+const { project, prevProject, nextProject } = Astro.props;
+---
+
+<Layout
+  title={`${project.title.pt} — Luiz Ricardo Favaro`}
+  description={project.description.pt}
+>
+  <SiteNav active="projects" />
+
+  <main class="container container-with-nav">
+    <div class="breadcrumb">
+      <a href="/projects" class="back-link">
+        <span aria-hidden="true">←</span>
+        <span data-lang="pt">Todos os projetos</span>
+        <span data-lang="en">All projects</span>
+      </a>
+    </div>
+
+    <article class="case-study">
+      <header class="case-study-header">
+        <div class="case-study-meta">
+          <span class="meta-pill tabular">{project.caseStudy.period}</span>
+          <span class="meta-pill">
+            <span data-lang="pt">{project.caseStudy.role.pt}</span>
+            <span data-lang="en">{project.caseStudy.role.en}</span>
+          </span>
+        </div>
+
+        <h1>
+          <span data-lang="pt">{project.title.pt}</span>
+          <span data-lang="en">{project.title.en}</span>
+        </h1>
+
+        <p class="case-study-summary">
+          <span data-lang="pt">{project.description.pt}</span>
+          <span data-lang="en">{project.description.en}</span>
+        </p>
+
+        <div class="tags">
+          {project.tags.map((tag) => (
+            <span>{tag}</span>
+          ))}
+        </div>
+
+        {project.link && (
+          <div class="case-study-actions">
+            <a
+              class="btn-primary"
+              href={project.link}
+              target={project.isInternal ? '_self' : '_blank'}
+              rel={project.isInternal ? undefined : 'noopener noreferrer'}
+            >
+              <span data-lang="pt">{project.linkText?.pt || 'Acessar'}</span>
+              <span data-lang="en">{project.linkText?.en || 'View'}</span>
+              <span aria-hidden="true">{project.isInternal ? '→' : '↗'}</span>
+            </a>
+          </div>
+        )}
+      </header>
+
+      <section class="case-study-section">
+        <h2>
+          <span data-lang="pt">Contexto</span>
+          <span data-lang="en">Context</span>
+        </h2>
+        <p>
+          <span data-lang="pt">{project.caseStudy.context.pt}</span>
+          <span data-lang="en">{project.caseStudy.context.en}</span>
+        </p>
+      </section>
+
+      <section class="case-study-section">
+        <h2>
+          <span data-lang="pt">Arquitetura &amp; Decisões Técnicas</span>
+          <span data-lang="en">Architecture &amp; Technical Decisions</span>
+        </h2>
+        <ul class="case-study-list">
+          {project.caseStudy.architecture.pt.map((item, idx) => (
+            <li>
+              <span data-lang="pt">{item}</span>
+              <span data-lang="en">{project.caseStudy.architecture.en[idx]}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="case-study-section">
+        <h2>
+          <span data-lang="pt">Destaques &amp; Verificação</span>
+          <span data-lang="en">Highlights &amp; Verification</span>
+        </h2>
+        <ul class="case-study-list">
+          {project.caseStudy.highlights.pt.map((item, idx) => (
+            <li>
+              <span data-lang="pt">{item}</span>
+              <span data-lang="en">{project.caseStudy.highlights.en[idx]}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {(prevProject || nextProject) && (
+        <nav class="case-study-pager" aria-label="Navegação entre projetos">
+          {prevProject ? (
+            <a href={`/projects/${prevProject.id}`} class="pager-link pager-prev">
+              <span class="pager-label">
+                <span data-lang="pt">← Anterior</span>
+                <span data-lang="en">← Previous</span>
+              </span>
+              <span class="pager-title">
+                <span data-lang="pt">{prevProject.title.pt}</span>
+                <span data-lang="en">{prevProject.title.en}</span>
+              </span>
+            </a>
+          ) : (
+            <span />
+          )}
+
+          {nextProject && (
+            <a href={`/projects/${nextProject.id}`} class="pager-link pager-next">
+              <span class="pager-label">
+                <span data-lang="pt">Próximo →</span>
+                <span data-lang="en">Next →</span>
+              </span>
+              <span class="pager-title">
+                <span data-lang="pt">{nextProject.title.pt}</span>
+                <span data-lang="en">{nextProject.title.en}</span>
+              </span>
+            </a>
+          )}
+        </nav>
+      )}
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="social-links">
+      {socialLinks.map((item) => (
+        <a
+          href={item.url}
+          target={item.url.startsWith('mailto') ? '_self' : '_blank'}
+          rel={item.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+    <p class="copyright">
+      <span data-lang="pt">{content.pt.footer.copyright}</span>
+      <span data-lang="en">{content.en.footer.copyright}</span>
+    </p>
+  </footer>
+</Layout>
