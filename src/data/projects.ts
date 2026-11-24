@@ -90,6 +90,56 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 'quicknote-crm',
+    title: {
+      pt: 'QuickNote CRM — Dock Desktop Offline-First (Tauri v2)',
+      en: 'QuickNote CRM — Offline-First Desktop Dock (Tauri v2)',
+    },
+    description: {
+      pt: 'Dock desktop leve em Tauri v2 (Rust) e React/TypeScript para equipes de Customer Success registrarem notas e tarefas durante reuniões. Persistência local offline-first em SQLite, integração sob demanda com Pipedrive, atalhos globais, fronteira IPC isolada e instaladores multi-OS (v0.1.0).',
+      en: 'Lightweight Tauri v2 (Rust) and React/TypeScript desktop dock built for Customer Success teams to capture notes and tasks during meetings. Features offline-first SQLite persistence, on-demand Pipedrive sync, global shortcuts, an isolated IPC boundary, and multi-OS installers (v0.1.0).',
+    },
+    tags: ['Tauri v2', 'Rust', 'React', 'TypeScript', 'SQLite', 'Pipedrive'],
+    link: 'https://github.com/ri-favaro/quicknote-crm',
+    linkText: {
+      pt: 'Ver no GitHub',
+      en: 'View on GitHub',
+    },
+    caseStudy: {
+      period: '2026',
+      role: {
+        pt: 'Criador & Engenheiro Principal',
+        en: 'Creator & Lead Engineer',
+      },
+      context: {
+        pt: 'Desenvolvido como ferramenta residente de baixo consumo para equipes de Customer Success capturarem notas e tarefas durante reuniões sem sair da chamada, com envio sob demanda ao CRM e funcionamento 100% offline.',
+        en: 'Built as a low-footprint resident desktop tool for Customer Success teams to capture meeting notes and tasks without leaving a call, supporting on-demand CRM sync and 100% offline operation.',
+      },
+      architecture: {
+        pt: [
+          'Dock frameless (always-on-top e skipTaskbar) retrátil nas bordas da tela com system tray e atalhos globais (Alt+Space, Ctrl+Shift+N e Esc).',
+          'Persistência local offline-first em SQLite para notas, tarefas e perfil CS, com fronteira IPC isolada (bridge.ts) mantendo tokens e credenciais apenas no backend Rust.',
+          'Integração sob demanda com Pipedrive (busca de deals e envio de notas/atividades) e configurações prontas para webhooks n8n e backup/auditoria no Supabase.',
+        ],
+        en: [
+          'Frameless retractable edge dock (always-on-top, skipTaskbar) with system tray controls and global shortcuts (Alt+Space, Ctrl+Shift+N, and Esc).',
+          'Offline-first SQLite persistence for notes, tasks, and CS profile metadata behind an isolated IPC boundary (bridge.ts) keeping credentials strictly in the Rust backend.',
+          'On-demand Pipedrive integration (deal lookup and note/activity publishing) alongside persisted configuration for n8n webhooks and Supabase audit backups.',
+        ],
+      },
+      highlights: {
+        pt: [
+          'Release v0.1.0 publicada com instaladores nativos para Windows (.msi/.exe), macOS (.dmg Apple Silicon e Intel) e Linux (.AppImage/.deb).',
+          'Stack enxuta em Tauri v2 (Rust), React, TypeScript, Tailwind CSS e SQLite com zero dependência de nuvem para captura local.',
+        ],
+        en: [
+          'v0.1.0 release published with native installers for Windows (.msi/.exe), macOS (.dmg Apple Silicon and Intel), and Linux (.AppImage/.deb).',
+          'Lean stack built with Tauri v2 (Rust), React, TypeScript, Tailwind CSS, and SQLite with zero cloud dependency for local capture.',
+        ],
+      },
+    },
+  },
+  {
     id: 'tcc',
     title: {
       pt: 'TCC — Jogos Lúdico-Musicais Interativos (COBRICS)',
