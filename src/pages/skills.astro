@@ -1119,7 +1119,7 @@ const totalPrinciples = skillsListRaw.filter((s) => s.kind === 'principle').leng
     position: sticky;
     top: 70px;
     z-index: 35;
-    background: rgba(1, 50, 45, 0.85);
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border);
@@ -1137,7 +1137,7 @@ const totalPrinciples = skillsListRaw.filter((s) => s.kind === 'principle').leng
 
   :global(:root[data-theme="light"]) .explorer-toolbar {
     background: rgba(250, 250, 248, 0.9);
-    box-shadow: 0 12px 36px rgba(1, 66, 60, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 12px 36px rgba(5, 68, 52, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
   }
 
   .toolbar-tabs {
