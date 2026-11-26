@@ -10,17 +10,17 @@ Toda estilização deve consumir as Custom Properties definidas em `:root` (Dark
 
 | Token | Dark Mode (`:root`) | Light Mode (`[data-theme="light"]`) | Uso |
 | :--- | :--- | :--- | :--- |
-| `--bg` | `#01423C` | `#FAFAF8` | Fundo principal da página |
-| `--bg-gradient` | `radial-gradient(...)` sutil em `#5FBFB0` | `radial-gradient(...)` sutil em `#01423C` | Profundidade sutil no topo |
+| `--bg` | `#054434` | `#FAFAF8` | Fundo principal da página |
+| `--bg-gradient` | `radial-gradient(...)` sutil em `#5FBFB0` | `radial-gradient(...)` sutil em `#054434` | Profundidade sutil no topo |
 | `--text` | `#F5F5F0` | `#172422` | Texto principal |
 | `--text-muted` | `#B8C7C4` | `#566864` | Subtítulos, metadados e legendas |
-| `--accent` | `#5FBFB0` | `#01423C` | Links, destaques e ações primárias |
-| `--accent-hover` | `#7BD1C4` | `#02665C` | Estado `:hover` de elementos interativos |
-| `--accent-subtle` | `rgba(95, 191, 176, 0.12)` | `rgba(1, 66, 60, 0.08)` | Fundo de badges e tags |
-| `--card-bg` | `rgba(255, 255, 255, 0.05)` | `rgba(1, 66, 60, 0.03)` | Superfície de cards e controles |
-| `--card-bg-hover` | `rgba(255, 255, 255, 0.08)` | `rgba(1, 66, 60, 0.06)` | Superfície em `:hover` |
-| `--border` | `rgba(255, 255, 255, 0.14)` | `rgba(1, 66, 60, 0.14)` | Bordas finas de separação |
-| `--border-focus` | `#5FBFB0` | `#01423C` | Contorno de foco acessível |
+| `--accent` | `#5FBFB0` | `#054434` | Links, destaques e ações primárias |
+| `--accent-hover` | `#7BD1C4` | `#08664E` | Estado `:hover` de elementos interativos |
+| `--accent-subtle` | `rgba(95, 191, 176, 0.12)` | `rgba(5, 68, 52, 0.08)` | Fundo de badges e tags |
+| `--card-bg` | `rgba(255, 255, 255, 0.05)` | `rgba(5, 68, 52, 0.03)` | Superfície de cards e controles |
+| `--card-bg-hover` | `rgba(255, 255, 255, 0.08)` | `rgba(5, 68, 52, 0.06)` | Superfície em `:hover` |
+| `--border` | `rgba(255, 255, 255, 0.14)` | `rgba(5, 68, 52, 0.14)` | Bordas finas de separação |
+| `--border-focus` | `#5FBFB0` | `#054434` | Contorno de foco acessível |
 | `--shadow-sm` / `--shadow-md` | Sombras escuras sutis | Sombras esverdeadas leves | Elevação de cards e controles |
 
 ---

@@ -1,5 +1,5 @@
 :root {
-  --bg: #01423C;
+  --bg: #054434;
   --bg-gradient: radial-gradient(circle at 50% 0%, rgba(95, 191, 176, 0.08) 0%, transparent 70%);
   --text: #F5F5F0;
   --text-muted: #B8C7C4;
@@ -16,18 +16,18 @@
 
 :root[data-theme="light"] {
   --bg: #FAFAF8;
-  --bg-gradient: radial-gradient(circle at 50% 0%, rgba(1, 66, 60, 0.05) 0%, transparent 70%);
+  --bg-gradient: radial-gradient(circle at 50% 0%, rgba(5, 68, 52, 0.05) 0%, transparent 70%);
   --text: #172422;
   --text-muted: #566864;
-  --accent: #01423C;
-  --accent-hover: #02665C;
-  --accent-subtle: rgba(1, 66, 60, 0.08);
-  --card-bg: rgba(1, 66, 60, 0.03);
-  --card-bg-hover: rgba(1, 66, 60, 0.06);
-  --border: rgba(1, 66, 60, 0.14);
-  --border-focus: #01423C;
+  --accent: #054434;
+  --accent-hover: #08664E;
+  --accent-subtle: rgba(5, 68, 52, 0.08);
+  --card-bg: rgba(5, 68, 52, 0.03);
+  --card-bg-hover: rgba(5, 68, 52, 0.06);
+  --border: rgba(5, 68, 52, 0.14);
+  --border-focus: #054434;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 8px 24px rgba(1, 66, 60, 0.08);
+  --shadow-md: 0 8px 24px rgba(5, 68, 52, 0.08);
 }
 
 *, *::before, *::after {
