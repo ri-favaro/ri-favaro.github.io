@@ -96,7 +96,7 @@ function initSkillsExplorer() {
             <span class="card-cmd">${escapeHtml(s.command)}</span>
           </div>
           <div class="badges">
-            <span class="cat-badge" style="background:${c.bg};color:${c.text};border-color:${c.border}">${escapeHtml(s.category)}</span>
+            <span class="cat-badge" data-cat="${escapeHtml(s.category)}" style="background:${c.bg};color:${c.text};border-color:${c.border}">${escapeHtml(s.category)}</span>
             ${s.manualOnly ? `<span class="manual-badge" title="disable-model-invocation: true">${manualBadgeText}</span>` : ''}
           </div>
         </div>
@@ -202,6 +202,7 @@ function initSkillsExplorer() {
   }
 
   function renderFilters() {
+    const lang = getCurrentLang();
     const skillCats = [
       'Todas',
       ...new Set(SKILLS.filter((s) => s.kind === 'skill').map((s) => s.category)),
@@ -211,10 +212,11 @@ function initSkillsExplorer() {
       skillsFiltersEl.innerHTML = skillCats
         .map((cat) => {
           const dotColor = CAT_COLORS[cat]?.dot || 'var(--accent)';
+          const label = cat === 'Todas' && lang === 'en' ? 'All' : cat;
           return `
             <button class="chip-btn ${skillCatFilter === cat ? 'active' : ''}" data-cat-skill="${cat}">
               <span class="chip-dot" style="background-color: ${cat === 'Todas' ? 'var(--accent)' : dotColor}"></span>
-              <span>${cat}</span>
+              <span>${label}</span>
             </button>
           `;
         })
@@ -230,10 +232,11 @@ function initSkillsExplorer() {
       pFiltersEl.innerHTML = pCats
         .map((cat) => {
           const dotColor = CAT_COLORS[cat]?.dot || 'var(--accent)';
+          const label = cat === 'Todas' && lang === 'en' ? 'All' : cat;
           return `
             <button class="chip-btn ${principleCatFilter === cat ? 'active' : ''}" data-cat-principle="${cat}">
               <span class="chip-dot" style="background-color: ${cat === 'Todas' ? 'var(--accent)' : dotColor}"></span>
-              <span>${cat}</span>
+              <span>${label}</span>
             </button>
           `;
         })
@@ -246,10 +249,11 @@ function initSkillsExplorer() {
       gFiltersEl.innerHTML = gCats
         .map((c) => {
           const dotColor = CAT_COLORS[c]?.dot || 'var(--accent)';
+          const label = c === 'Todos' && lang === 'en' ? 'All' : c;
           return `
             <button class="chip-btn ${graphClusterFilter === c ? 'active' : ''}" data-cluster="${c}">
               <span class="chip-dot" style="background-color: ${c === 'Todos' ? 'var(--accent)' : dotColor}"></span>
-              <span>${c}</span>
+              <span>${label}</span>
             </button>
           `;
         })
@@ -282,7 +286,7 @@ function initSkillsExplorer() {
     box.innerHTML = `
       <div>
         <h4 style="margin:0;font-family:ui-monospace,monospace;font-size:1.1rem;color:var(--accent);">/${escapeHtml(s.id)}</h4>
-        <span class="cat-badge" style="display:inline-block;margin-top:6px;background:${CAT_COLORS[s.category].bg};color:${CAT_COLORS[s.category].text};border-color:${CAT_COLORS[s.category].border}">${escapeHtml(s.category)}</span>
+        <span class="cat-badge" data-cat="${escapeHtml(s.category)}" style="display:inline-block;margin-top:6px;background:${CAT_COLORS[s.category].bg};color:${CAT_COLORS[s.category].text};border-color:${CAT_COLORS[s.category].border}">${escapeHtml(s.category)}</span>
       </div>
       <p style="margin:0;font-size:0.86rem;color:var(--text-muted);line-height:1.5;">${escapeHtml(summary)}</p>
       ${
@@ -354,9 +358,14 @@ function initSkillsExplorer() {
       const dim = !clusterMatch || (activeId && !isConn);
       return `
         <g class="graph-node ${isSel ? 'selected' : ''} ${dim ? 'dim' : ''}"
-           data-node-id="${n.id}">
-          <circle cx="${n.x}" cy="${n.y}" r="${n.r}" fill="${c.dot}" />
-          <text x="${n.x}" y="${n.y + n.r + 13}">${escapeHtml(n.label)}</text>
+           data-node-id="${n.id}"
+           tabindex="0"
+           role="button"
+           aria-label="/${escapeHtml(n.id)}"
+           aria-pressed="${isSel}">
+          <circle class="graph-node-hit" cx="${n.x}" cy="${n.y}" r="${Math.max(n.r, 27)}" />
+          <circle class="graph-node-dot" cx="${n.x}" cy="${n.y}" r="${n.r}" fill="${c.dot}" />
+          <text x="${n.x}" y="${n.y + n.r + 14}">${escapeHtml(n.label)}</text>
         </g>
       `;
     }).join('');
@@ -477,9 +486,63 @@ function initSkillsExplorer() {
     }
   });
 
-  // Search input handling
+  // Search input & TL;DR state handling
   const searchInput = document.getElementById('search-input');
   const searchClear = document.getElementById('search-clear');
+  const graphContainer = document.getElementById('graph-canvas-container');
+  const tldrDetails = document.getElementById('tldr-summary');
+  const tldrSummary = tldrDetails?.querySelector('summary');
+
+  function syncLanguageLabels() {
+    const lang = getCurrentLang();
+    if (searchInput) {
+      searchInput.placeholder =
+        lang === 'en'
+          ? 'Search skill, /command or concept...'
+          : 'Buscar skill, /comando ou conceito...';
+      searchInput.setAttribute(
+        'aria-label',
+        lang === 'en' ? 'Search skills and principles' : 'Buscar skills e princípios',
+      );
+    }
+    if (searchClear) {
+      searchClear.setAttribute('aria-label', lang === 'en' ? 'Clear search' : 'Limpar busca');
+    }
+    if (graphContainer) {
+      graphContainer.setAttribute(
+        'aria-label',
+        lang === 'en'
+          ? 'Interactive skills dependency map'
+          : 'Mapa interativo de dependências entre skills',
+      );
+    }
+  }
+
+  if (tldrDetails && tldrSummary) {
+    tldrSummary.setAttribute('aria-expanded', String(tldrDetails.open));
+    tldrDetails.addEventListener('toggle', () => {
+      tldrSummary.setAttribute('aria-expanded', String(tldrDetails.open));
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    const nodeEl = e.target.closest?.('[data-node-id]');
+    if (!nodeEl) return;
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      selectedGraphNode = nodeEl.dataset.nodeId;
+      renderGraph();
+    } else if (e.key === ' ') {
+      e.preventDefault();
+    }
+  });
+
+  document.addEventListener('keyup', (e) => {
+    const nodeEl = e.target.closest?.('[data-node-id]');
+    if (!nodeEl || e.key !== ' ') return;
+    selectedGraphNode = nodeEl.dataset.nodeId;
+    renderGraph();
+  });
 
   if (searchInput) {
     searchInput.addEventListener('input', () => {
@@ -514,6 +577,8 @@ function initSkillsExplorer() {
 
   // Observe language change to re-render texts
   const langObserver = new MutationObserver(() => {
+    syncLanguageLabels();
+    renderFilters();
     renderCards();
     renderWorkflows();
     updateInspector(selectedGraphNode);
@@ -524,10 +589,17 @@ function initSkillsExplorer() {
   });
 
   // Initial mount
+  syncLanguageLabels();
   renderFilters();
   renderWorkflows();
   renderGraph();
   renderCards();
+
+  if (graphContainer && graphContainer.scrollWidth > graphContainer.clientWidth) {
+    graphContainer.scrollLeft = Math.round(
+      (graphContainer.scrollWidth - graphContainer.clientWidth) / 2,
+    );
+  }
 }
 
 if (document.readyState === 'loading') {
